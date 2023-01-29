@@ -1,30 +1,45 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="wrapper">
+    <post-form @create="createPost" />
+    <post-list :posts="posts" @remove="removePost" />
+  </div>
 </template>
 
+<script>
+import PostList from '@/components/PostList.vue'
+import PostForm from '@/components/PostForm.vue'
+
+export default {
+  components: {
+    PostList,
+    PostForm,
+  },
+
+  data() {
+    return {
+      posts: [],
+    }
+  },
+  methods: {
+    createPost(post) {
+      this.posts.push(post)
+    },
+    removePost(post) {
+      this.posts = this.posts.filter((p) => p.id !== post.id)
+    },
+  },
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+.wrapper {
+  width: 1400px;
+  margin: 0 auto;
 }
 </style>
